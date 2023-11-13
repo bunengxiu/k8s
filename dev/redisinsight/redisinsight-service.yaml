@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redisinsight-service
+  namespace: redisinsight-ns
+  labels:
+    app: redisinsight
+spec:
+  type: NodePort
+  ports:
+    - name: redisinsight-port
+      port: 8001
+      targetPort: 8001
+      protocol: TCP
+  selector:
+    app: redisinsight
