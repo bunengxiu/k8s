@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: efak-ns
+  name: efak-configmap
+  labels:
+    app: efak
+data:
+  system-config.properties: |
+    kafka.eagle.zk.cluster.alias=cluster1
+    cluster1.zk.list=zookeeper-service.kafka-ns:2181
+    kafka.zk.limit.size=25
+    kafka.eagle.webui.port=8048
+    cluster1.kafka.eagle.offset.storage=kafka
+    kafka.eagle.metrics.charts=true
+    kafka.eagle.sql.fix.error=true
+    kafka.eagle.sql.topic.records.max=5000
+    kafka.eagle.topic.token=keadmin
+    kafka.eagle.driver=com.mysql.jdbc.Driver
+    kafka.eagle.url=jdbc:mysql://mysql-service:3306/efak
+    kafka.eagle.username=root
+    kafka.eagle.password=admin
