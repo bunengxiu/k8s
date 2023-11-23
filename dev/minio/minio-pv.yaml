@@ -1,0 +1,689 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve1-1
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv1
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve1-2
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv2
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve1-3
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv3
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve1-4
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv4
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve1-5
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv5
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve2-1
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv1
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve2-2
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv2
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve2-3
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv3
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve2-4
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv4
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve2-5
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv5
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve3-1
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv1
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve3-2
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv2
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve3-3
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv3
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve3-4
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv4
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve3-5
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv5
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve4-1
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv1
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave4
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve4-2
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv2
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave4
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve4-3
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv3
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave4
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve4-4
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv4
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave4
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve4-5
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv5
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave4
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve5-1
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv1
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave5
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve5-2
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv2
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave5
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve5-3
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv3
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave5
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve5-4
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv4
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave5
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve5-5
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv5
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave5
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve6-1
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv1
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave6
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve6-2
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv2
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave6
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve6-3
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv3
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave6
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve6-4
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv4
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave6
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: minio-pv-salve6-5
+spec:
+   capacity:
+      storage: 30Gi
+   volumeMode: Filesystem
+   accessModes:
+   - ReadWriteOnce
+   persistentVolumeReclaimPolicy: Retain
+   storageClassName: minio-local-storage
+   local:
+      path: /data/minio/pv5
+   nodeAffinity:
+      required:
+         nodeSelectorTerms:
+         - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - slave6
