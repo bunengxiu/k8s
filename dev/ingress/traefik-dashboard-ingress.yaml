@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard-ingress
+  namespace: ingress-ns
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  labels:
+    app: ingress
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: traefik.dashboard.cn
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: traefik-dashboard-service
+                port:
+                  number: 8080
