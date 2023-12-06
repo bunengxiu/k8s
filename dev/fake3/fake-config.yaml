@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake3-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake3-deployment
+  namespace: fake3-ns
+  labels:
+    app: fake3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake3
+  template:
+    metadata:
+      labels:
+        app: fake3
+    spec:
+      containers:
+      - name: fake3
+        imagePullPolicy: Always
+        image: bunengxiu/fake3:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20003
+        livenessProbe:
+          tcpSocket:
+            port: 20003
+          initialDelaySeconds: 300
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20003
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake3-service
+  namespace: fake3-ns
+  labels:
+    app: fake3
+spec:
+  ports:
+    - port: 20003
+      protocol: TCP
+      targetPort: 20003
+  selector:
+    app: fake3
+  type: NodePort

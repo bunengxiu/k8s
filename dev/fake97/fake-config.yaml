@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake97-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake97-deployment
+  namespace: fake97-ns
+  labels:
+    app: fake97
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake97
+  template:
+    metadata:
+      labels:
+        app: fake97
+    spec:
+      containers:
+      - name: fake97
+        imagePullPolicy: Always
+        image: bunengxiu/fake97:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20097
+        livenessProbe:
+          tcpSocket:
+            port: 20097
+          initialDelaySeconds: 970
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20097
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake97-service
+  namespace: fake97-ns
+  labels:
+    app: fake97
+spec:
+  ports:
+    - port: 20097
+      protocol: TCP
+      targetPort: 20097
+  selector:
+    app: fake97
+  type: NodePort

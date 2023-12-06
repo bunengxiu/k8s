@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake64-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake64-deployment
+  namespace: fake64-ns
+  labels:
+    app: fake64
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake64
+  template:
+    metadata:
+      labels:
+        app: fake64
+    spec:
+      containers:
+      - name: fake64
+        imagePullPolicy: Always
+        image: bunengxiu/fake64:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20064
+        livenessProbe:
+          tcpSocket:
+            port: 20064
+          initialDelaySeconds: 640
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20064
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake64-service
+  namespace: fake64-ns
+  labels:
+    app: fake64
+spec:
+  ports:
+    - port: 20064
+      protocol: TCP
+      targetPort: 20064
+  selector:
+    app: fake64
+  type: NodePort

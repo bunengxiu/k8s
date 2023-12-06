@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake85-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake85-deployment
+  namespace: fake85-ns
+  labels:
+    app: fake85
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake85
+  template:
+    metadata:
+      labels:
+        app: fake85
+    spec:
+      containers:
+      - name: fake85
+        imagePullPolicy: Always
+        image: bunengxiu/fake85:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20085
+        livenessProbe:
+          tcpSocket:
+            port: 20085
+          initialDelaySeconds: 850
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20085
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake85-service
+  namespace: fake85-ns
+  labels:
+    app: fake85
+spec:
+  ports:
+    - port: 20085
+      protocol: TCP
+      targetPort: 20085
+  selector:
+    app: fake85
+  type: NodePort

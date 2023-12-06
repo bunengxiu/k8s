@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake82-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake82-deployment
+  namespace: fake82-ns
+  labels:
+    app: fake82
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake82
+  template:
+    metadata:
+      labels:
+        app: fake82
+    spec:
+      containers:
+      - name: fake82
+        imagePullPolicy: Always
+        image: bunengxiu/fake82:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20082
+        livenessProbe:
+          tcpSocket:
+            port: 20082
+          initialDelaySeconds: 820
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20082
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake82-service
+  namespace: fake82-ns
+  labels:
+    app: fake82
+spec:
+  ports:
+    - port: 20082
+      protocol: TCP
+      targetPort: 20082
+  selector:
+    app: fake82
+  type: NodePort

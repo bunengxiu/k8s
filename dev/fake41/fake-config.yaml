@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake41-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake41-deployment
+  namespace: fake41-ns
+  labels:
+    app: fake41
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake41
+  template:
+    metadata:
+      labels:
+        app: fake41
+    spec:
+      containers:
+      - name: fake41
+        imagePullPolicy: Always
+        image: bunengxiu/fake41:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20041
+        livenessProbe:
+          tcpSocket:
+            port: 20041
+          initialDelaySeconds: 410
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20041
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake41-service
+  namespace: fake41-ns
+  labels:
+    app: fake41
+spec:
+  ports:
+    - port: 20041
+      protocol: TCP
+      targetPort: 20041
+  selector:
+    app: fake41
+  type: NodePort

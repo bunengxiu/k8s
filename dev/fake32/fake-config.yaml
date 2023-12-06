@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake32-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake32-deployment
+  namespace: fake32-ns
+  labels:
+    app: fake32
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake32
+  template:
+    metadata:
+      labels:
+        app: fake32
+    spec:
+      containers:
+      - name: fake32
+        imagePullPolicy: Always
+        image: bunengxiu/fake32:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20032
+        livenessProbe:
+          tcpSocket:
+            port: 20032
+          initialDelaySeconds: 320
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20032
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake32-service
+  namespace: fake32-ns
+  labels:
+    app: fake32
+spec:
+  ports:
+    - port: 20032
+      protocol: TCP
+      targetPort: 20032
+  selector:
+    app: fake32
+  type: NodePort

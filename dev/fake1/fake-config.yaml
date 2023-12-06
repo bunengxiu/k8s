@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake1-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake1-deployment
+  namespace: fake1-ns
+  labels:
+    app: fake1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake1
+  template:
+    metadata:
+      labels:
+        app: fake1
+    spec:
+      containers:
+      - name: fake1
+        imagePullPolicy: Always
+        image: bunengxiu/fake1:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20001
+        livenessProbe:
+          tcpSocket:
+            port: 20001
+          initialDelaySeconds: 300
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20001
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake1-service
+  namespace: fake1-ns
+  labels:
+    app: fake1
+spec:
+  ports:
+    - port: 20001
+      protocol: TCP
+      targetPort: 20001
+  selector:
+    app: fake1
+  type: NodePort

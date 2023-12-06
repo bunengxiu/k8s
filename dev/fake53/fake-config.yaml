@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake53-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake53-deployment
+  namespace: fake53-ns
+  labels:
+    app: fake53
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake53
+  template:
+    metadata:
+      labels:
+        app: fake53
+    spec:
+      containers:
+      - name: fake53
+        imagePullPolicy: Always
+        image: bunengxiu/fake53:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20053
+        livenessProbe:
+          tcpSocket:
+            port: 20053
+          initialDelaySeconds: 530
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20053
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake53-service
+  namespace: fake53-ns
+  labels:
+    app: fake53
+spec:
+  ports:
+    - port: 20053
+      protocol: TCP
+      targetPort: 20053
+  selector:
+    app: fake53
+  type: NodePort

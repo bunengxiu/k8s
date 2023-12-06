@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake98-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake98-deployment
+  namespace: fake98-ns
+  labels:
+    app: fake98
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake98
+  template:
+    metadata:
+      labels:
+        app: fake98
+    spec:
+      containers:
+      - name: fake98
+        imagePullPolicy: Always
+        image: bunengxiu/fake98:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20098
+        livenessProbe:
+          tcpSocket:
+            port: 20098
+          initialDelaySeconds: 980
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20098
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake98-service
+  namespace: fake98-ns
+  labels:
+    app: fake98
+spec:
+  ports:
+    - port: 20098
+      protocol: TCP
+      targetPort: 20098
+  selector:
+    app: fake98
+  type: NodePort

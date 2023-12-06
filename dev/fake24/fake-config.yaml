@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake24-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake24-deployment
+  namespace: fake24-ns
+  labels:
+    app: fake24
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake24
+  template:
+    metadata:
+      labels:
+        app: fake24
+    spec:
+      containers:
+      - name: fake24
+        imagePullPolicy: Always
+        image: bunengxiu/fake24:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20024
+        livenessProbe:
+          tcpSocket:
+            port: 20024
+          initialDelaySeconds: 300
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20024
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake24-service
+  namespace: fake24-ns
+  labels:
+    app: fake24
+spec:
+  ports:
+    - port: 20024
+      protocol: TCP
+      targetPort: 20024
+  selector:
+    app: fake24
+  type: NodePort

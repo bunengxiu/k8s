@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake50-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake50-deployment
+  namespace: fake50-ns
+  labels:
+    app: fake50
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake50
+  template:
+    metadata:
+      labels:
+        app: fake50
+    spec:
+      containers:
+      - name: fake50
+        imagePullPolicy: Always
+        image: bunengxiu/fake50:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20050
+        livenessProbe:
+          tcpSocket:
+            port: 20050
+          initialDelaySeconds: 500
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20050
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake50-service
+  namespace: fake50-ns
+  labels:
+    app: fake50
+spec:
+  ports:
+    - port: 20050
+      protocol: TCP
+      targetPort: 20050
+  selector:
+    app: fake50
+  type: NodePort

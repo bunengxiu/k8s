@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake27-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake27-deployment
+  namespace: fake27-ns
+  labels:
+    app: fake27
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake27
+  template:
+    metadata:
+      labels:
+        app: fake27
+    spec:
+      containers:
+      - name: fake27
+        imagePullPolicy: Always
+        image: bunengxiu/fake27:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20027
+        livenessProbe:
+          tcpSocket:
+            port: 20027
+          initialDelaySeconds: 300
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20027
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake27-service
+  namespace: fake27-ns
+  labels:
+    app: fake27
+spec:
+  ports:
+    - port: 20027
+      protocol: TCP
+      targetPort: 20027
+  selector:
+    app: fake27
+  type: NodePort

@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fake69-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake69-deployment
+  namespace: fake69-ns
+  labels:
+    app: fake69
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fake69
+  template:
+    metadata:
+      labels:
+        app: fake69
+    spec:
+      containers:
+      - name: fake69
+        imagePullPolicy: Always
+        image: bunengxiu/fake69:1.0.0
+        env:
+          - name: ENV
+            value: dev
+        ports:
+        - containerPort: 20069
+        livenessProbe:
+          tcpSocket:
+            port: 20069
+          initialDelaySeconds: 690
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 20069
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake69-service
+  namespace: fake69-ns
+  labels:
+    app: fake69
+spec:
+  ports:
+    - port: 20069
+      protocol: TCP
+      targetPort: 20069
+  selector:
+    app: fake69
+  type: NodePort
