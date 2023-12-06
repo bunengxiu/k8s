@@ -1,45 +1,45 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: fake45-ns
+  name: fake68-ns
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fake45-deployment
-  namespace: fake45-ns
+  name: fake68-deployment
+  namespace: fake68-ns
   labels:
-    app: fake45
+    app: fake68
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: fake45
+      app: fake68
   template:
     metadata:
       labels:
-        app: fake45
+        app: fake68
     spec:
       containers:
-      - name: fake45
+      - name: fake68
         imagePullPolicy: Always
-        image: bunengxiu/fake45:1.0.0
+        image: bunengxiu/fake68:1.0.0
         env:
           - name: ENV
             value: dev
         ports:
-        - containerPort: 20045
+        - containerPort: 20068
         livenessProbe:
           tcpSocket:
-            port: 20045
-          initialDelaySeconds: 450
+            port: 20068
+          initialDelaySeconds: 680
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
           failureThreshold: 3
         readinessProbe:
           tcpSocket:
-            port: 20045
+            port: 20068
           initialDelaySeconds: 5
           timeoutSeconds: 1
           periodSeconds: 10
@@ -49,15 +49,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake45-service
-  namespace: fake45-ns
+  name: fake68-service
+  namespace: fake68-ns
   labels:
-    app: fake45
+    app: fake68
 spec:
   ports:
-    - port: 20045
+    - port: 20068
       protocol: TCP
-      targetPort: 20045
+      targetPort: 20068
   selector:
-    app: fake45
+    app: fake68
   type: NodePort
