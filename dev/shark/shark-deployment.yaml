@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shark-deployment-green
+  name: shark-deployment-1-0-1
   namespace: shark-ns
   labels:
     app: shark
