@@ -12,5 +12,4 @@ spec:
       targetPort: 10002
   selector:
     app: shark
-    version: 1.0.1
   type: NodePort
