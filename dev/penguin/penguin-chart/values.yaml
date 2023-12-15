@@ -1,0 +1,15 @@
+namespace: penguin-ns
+app: penguin
+port: 10000
+
+# deployment
+replicaCount: 2
+deploymentName: penguin-deployment
+repository: bunengxiu/penguin
+tag: "1.0.0"
+pullPolicy: Always
+env: dev
+
+# service
+serviceName: penguin-service
+type: NodePort

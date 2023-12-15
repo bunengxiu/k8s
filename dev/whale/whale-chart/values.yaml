@@ -1,0 +1,15 @@
+namespace: whale-ns
+app: whale
+port: 10001
+
+# deployment
+replicaCount: 3
+deploymentName: whale-deployment
+repository: bunengxiu/whale
+tag: "1.0.0"
+pullPolicy: Always
+env: dev
+
+# service
+serviceName: whale-service
+type: NodePort
