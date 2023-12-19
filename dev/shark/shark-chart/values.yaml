@@ -1,4 +1,4 @@
-namespace: shark-ns
+namespace: default
 app: shark
 port: 10002
 
