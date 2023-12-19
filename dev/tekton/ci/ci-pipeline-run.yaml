@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: clone-build-push-run-
+  namespace: tekton-ns
+spec:
+  pipelineRef:
+    name: clone-build-push
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  workspaces:
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: ci-pvc
+    - name: git-credentials
+      secret:
+        secretName: git-credentials
+    - name: docker-credentials
+      secret:
+        secretName: docker-credentials
+  params:
+    - name: repo-url
+      value: "git@github.com:bunengxiu/dolphin.git"
+    - name: repo-revision
+      value: "ddd"
+    - name: image-reference
+      value: "bunengxiu/shark:1.0.0"
+    - name: dockerfile
+      value: "./shark/Dockerfile"
+    - name: context
+      value: "./shark/"

@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: clone-deploy-run-
+  namespace: tekton-ns
+spec:
+  pipelineRef:
+    name: clone-deploy
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  workspaces:
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: cd-pvc
+    - name: git-credentials
+      secret:
+        secretName: git-credentials
+  params:
+    - name: repo-url
+      value: "git@github.com:bunengxiu/k8s.git"
+    - name: repo-revision
+      value: "ddd"
+    - name: charts_dir
+      value: "./dev/shark/shark-chart/"
+    - name: values_file
+      value: "values.yaml"
+    - name: release_namespace
+      value: "shark-ns"
+    - name: release_version
+      value: "1.0.0"
+    - name: release_name
+      value: "shark"
+    - name: kubeconfig
+      value: ""

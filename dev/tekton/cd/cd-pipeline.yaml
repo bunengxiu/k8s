@@ -1,0 +1,73 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: clone-deploy
+  namespace: tekton-ns
+spec:
+  description: |
+    This pipeline clones a git repo, builds a Docker image with Kaniko and pushes it to a registry
+  params:
+    - name: repo-url
+      type: string
+      description: "The git repo URL to clone from."
+    - name: repo-revision
+      description: "Revision to checkout. (branch, tag, sha, ref, etc...)"
+      type: string
+    - name: charts_dir
+      type: string
+      description: "The directory in source that contains the helm chart"
+    - name: release_version
+      type: string
+      description: "The helm release version in semantic versioning format"
+    - name: release_name
+      type: string
+      description: "The helm release name"
+    - name: release_namespace
+      type: string
+      description: "The helm release namespace"
+    - name: values_file
+      type: string
+      description: "The values file to be used"
+    - name: kubeconfig
+      type: string
+      description: "kubeconfig string base64 encoded"
+  workspaces:
+    - name: shared-data
+      description: |
+        This workspace contains the cloned repo files, so they can be read by the next task.
+    - name: git-credentials
+      description: "My ssh credentials"
+  tasks:
+    - name: fetch-source
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-data
+        - name: ssh-directory
+          workspace: git-credentials
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.repo-revision)
+    - name: deploy
+      runAfter: [ "fetch-source" ]
+      taskRef:
+        name: helm-upgrade-from-source
+      workspaces:
+        - name: source
+          workspace: shared-data
+      params:
+        - name: charts_dir
+          value: $(params.charts_dir)
+        - name: values_file
+          value: $(params.values_file)
+        - name: release_namespace
+          value: $(params.release_namespace)
+        - name: release_version
+          value: $(params.release_version)
+        - name: release_name
+          value: $(params.release_name)
+        - name: kubeconfig
+          value: $(params.kubeconfig)
