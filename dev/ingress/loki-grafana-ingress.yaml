@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki-grafana-ingress
+  namespace: loki-stack-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: loki-grafana.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loki-grafana
+                port:
+                  number: 3000
