@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake61-ingress
+  namespace: fake61-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake61.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake61-service
+                port:
+                  number: 20061

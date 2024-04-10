@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake90-ingress
+  namespace: fake90-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake90.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake90-service
+                port:
+                  number: 20090

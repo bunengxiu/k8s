@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake6-ingress
+  namespace: fake6-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake6.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake6-service
+                port:
+                  number: 20006

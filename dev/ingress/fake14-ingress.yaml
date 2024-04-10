@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake14-ingress
+  namespace: fake14-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake14.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake14-service
+                port:
+                  number: 20014

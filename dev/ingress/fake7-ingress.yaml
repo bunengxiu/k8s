@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake7-ingress
+  namespace: fake7-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake7.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake7-service
+                port:
+                  number: 20007

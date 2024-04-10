@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake100-ingress
+  namespace: fake100-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake100.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake100-service
+                port:
+                  number: 20100

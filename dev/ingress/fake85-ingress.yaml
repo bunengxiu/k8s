@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake85-ingress
+  namespace: fake85-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake85.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake85-service
+                port:
+                  number: 20085
