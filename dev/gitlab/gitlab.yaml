@@ -70,7 +70,7 @@ spec:
           value: bunengxiu@163.com
 
         - name: GITLAB_HOST
-          value: git.dolphin.top
+          value: gitlab.dolphin.top
         - name: GITLAB_PORT
           value: "80"
         - name: GITLAB_SSH_PORT
