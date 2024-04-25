@@ -13,3 +13,8 @@ env: dev
 # service
 serviceName: whale-service
 type: NodePort
+
+# ingress
+ingressName: whale-ingress
+ingressClassName: nginx
+hostName: whale.dolphin.top

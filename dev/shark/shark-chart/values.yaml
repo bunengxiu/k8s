@@ -13,3 +13,8 @@ env: dev
 # service
 serviceName: shark-service
 type: NodePort
+
+# ingress
+ingressName: shark-ingress
+ingressClassName: nginx
+hostName: shark.dolphin.top

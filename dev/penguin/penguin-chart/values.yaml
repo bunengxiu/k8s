@@ -13,3 +13,8 @@ env: dev
 # service
 serviceName: penguin-service
 type: NodePort
+
+# ingress
+ingressName: penguin-ingress
+ingressClassName: nginx
+hostName: penguin.dolphin.top
