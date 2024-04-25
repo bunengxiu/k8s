@@ -61,3 +61,22 @@ spec:
   selector:
     app: fake2
   type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fake2-ingress
+  namespace: fake2-ns
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: fake2.dolphin.top
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fake2-service
+                port:
+                  number: 20002
