@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: openobserve
+  namespace: openobserve
+  labels:
+    app: openobserve
+spec:
+  serviceName: openobserve
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openobserve
+  template:
+    metadata:
+      labels:
+        app: openobserve
+    spec:
+      securityContext:
+        fsGroup: 2000
+        runAsUser: 10000
+        runAsGroup: 3000
+        runAsNonRoot: true
+      containers:
+        - name: openobserve
+          image: public.ecr.aws/zinclabs/openobserve:latest
+          env:
+            - name: ZO_ROOT_USER_EMAIL # 指定管理员邮箱
+              value: bunengxiu@163.com
+            - name: ZO_ROOT_USER_PASSWORD # 指定管理员密码
+              value: admin123
+            - name: ZO_DATA_DIR
+              value: /data
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 4096m
+              memory: 2048Mi
+            requests:
+              cpu: 256m
+              memory: 50Mi
+          ports:
+            - containerPort: 5080
+              name: http
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: nfs-client # 指定一个可用的存储类
+        resources:
+          requests:
+            storage: 5Gi
