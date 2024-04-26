@@ -2,11 +2,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: loki-grafana-ingress
-  namespace: loki-stack-ns
+  namespace: loki-stack
 spec:
   ingressClassName: nginx
   rules:
-    - host: loki-grafana.dolphin.top
+    - host: loki-grafana.dev.dolphin.top
       http:
         paths:
           - path: /
