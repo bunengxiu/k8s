@@ -2,11 +2,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prometheus-grafana-ingress
-  namespace: prometheus-stack-ns
+  namespace: prometheus-stack
 spec:
   ingressClassName: nginx
   rules:
-    - host: prometheus-grafana.dolphin.top
+    - host: prometheus-grafana.dev.dolphin.top
       http:
         paths:
           - path: /
