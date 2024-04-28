@@ -1,0 +1,30 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: sidecar
+  namespace: opentelemetry-collector
+spec:
+  mode: sidecar
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          http:
+    processors:
+      batch:
+    exporters:
+      debug:
+      otlphttp/collector:
+        endpoint: http://simplest-collector.opentelemetry-collector:4318
+        headers:
+          Authorization: Basic YnVuZW5neGl1QDE2My5jb206YWRtaW4xMjM=
+          stream-name: default
+    service:
+      telemetry:
+        logs:
+          level: "debug"
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: []
+          exporters: [debug, otlphttp/collector]

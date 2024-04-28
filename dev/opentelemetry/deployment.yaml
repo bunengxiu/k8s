@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+  namespace: opentelemetry-collector
+spec:
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "true"
+        sidecar.opentelemetry.io/inject: "sidecar"
+    spec:
+      containers:
+        - name: app
+          image: cnych/spring-petclinic:latest
