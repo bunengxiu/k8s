@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: fake3-ns
+  name: fake3
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fake3-deployment
-  namespace: fake3-ns
+  name: fake3
+  namespace: fake3
   labels:
     app: fake3
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: fake3
@@ -19,38 +19,25 @@ spec:
     metadata:
       labels:
         app: fake3
+      annotations:
+        instrumentation.opentelemetry.io/inject-python: "opentelemetry-collector/python-instrumentation"
+        sidecar.opentelemetry.io/inject: "opentelemetry-collector/sidecar"
     spec:
       containers:
-      - name: fake3
-        imagePullPolicy: Always
-        image: bunengxiu/fake3:1.0.0
-        env:
-          - name: ENV
-            value: dev
-        ports:
-        - containerPort: 20003
-        livenessProbe:
-          tcpSocket:
-            port: 20003
-          initialDelaySeconds: 300
-          timeoutSeconds: 1
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
-        readinessProbe:
-          tcpSocket:
-            port: 20003
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
+        - name: fake3
+          imagePullPolicy: Always
+          image: bunengxiu/fake3:1.0.0
+          env:
+            - name: ENV
+              value: dev
+          ports:
+            - containerPort: 20003
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake3-service
-  namespace: fake3-ns
+  name: fake3
+  namespace: fake3
   labels:
     app: fake3
 spec:
@@ -65,18 +52,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fake3-ingress
-  namespace: fake3-ns
+  name: fake3
+  namespace: fake3
 spec:
   ingressClassName: nginx
   rules:
-    - host: fake3.dolphin.top
+    - host: fake3.dev.dolphin.top
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: fake3-service
+                name: fake3
                 port:
                   number: 20003

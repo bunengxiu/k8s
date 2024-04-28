@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: opentelemetry-collector
+  name: fake1
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fake1-deployment
-  namespace: opentelemetry-collector
+  name: fake1
+  namespace: fake1
   labels:
     app: fake1
 spec:
@@ -20,40 +20,24 @@ spec:
       labels:
         app: fake1
       annotations:
-        instrumentation.opentelemetry.io/inject-python: "true"
-        sidecar.opentelemetry.io/inject: "sidecar"
+        instrumentation.opentelemetry.io/inject-python: "opentelemetry-collector/python-instrumentation"
+        sidecar.opentelemetry.io/inject: "opentelemetry-collector/sidecar"
     spec:
       containers:
-      - name: fake1
-        imagePullPolicy: Always
-        image: bunengxiu/fake1:1.0.0
-        env:
-          - name: ENV
-            value: dev
-        ports:
-        - containerPort: 20001
-        livenessProbe:
-          tcpSocket:
-            port: 20001
-          initialDelaySeconds: 300
-          timeoutSeconds: 1
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
-        readinessProbe:
-          tcpSocket:
-            port: 20001
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
+        - name: fake1
+          imagePullPolicy: Always
+          image: bunengxiu/fake1:1.0.0
+          env:
+            - name: ENV
+              value: dev
+          ports:
+            - containerPort: 20001
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake1-service
-  namespace: opentelemetry-collector
+  name: fake1
+  namespace: fake1
   labels:
     app: fake1
 spec:
@@ -68,18 +52,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fake1-ingress
-  namespace: opentelemetry-collector
+  name: fake1
+  namespace: fake1
 spec:
   ingressClassName: nginx
   rules:
-    - host: fake1.dolphin.top
+    - host: fake1.dev.dolphin.top
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: fake1-service
+                name: fake1
                 port:
                   number: 20001

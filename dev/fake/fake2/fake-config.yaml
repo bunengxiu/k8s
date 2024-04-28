@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: fake2-ns
+  name: fake2
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fake2-deployment
-  namespace: fake2-ns
+  name: fake2
+  namespace: fake2
   labels:
     app: fake2
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: fake2
@@ -19,38 +19,25 @@ spec:
     metadata:
       labels:
         app: fake2
+      annotations:
+        instrumentation.opentelemetry.io/inject-python: "opentelemetry-collector/python-instrumentation"
+        sidecar.opentelemetry.io/inject: "opentelemetry-collector/sidecar"
     spec:
       containers:
-      - name: fake2
-        imagePullPolicy: Always
-        image: bunengxiu/fake2:1.0.0
-        env:
-          - name: ENV
-            value: dev
-        ports:
-        - containerPort: 20002
-        livenessProbe:
-          tcpSocket:
-            port: 20002
-          initialDelaySeconds: 300
-          timeoutSeconds: 1
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
-        readinessProbe:
-          tcpSocket:
-            port: 20002
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
-          periodSeconds: 10
-          successThreshold: 1
-          failureThreshold: 3
+        - name: fake2
+          imagePullPolicy: Always
+          image: bunengxiu/fake2:1.0.0
+          env:
+            - name: ENV
+              value: dev
+          ports:
+            - containerPort: 20002
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: fake2-service
-  namespace: fake2-ns
+  name: fake2
+  namespace: fake2
   labels:
     app: fake2
 spec:
@@ -65,18 +52,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fake2-ingress
-  namespace: fake2-ns
+  name: fake2
+  namespace: fake2
 spec:
   ingressClassName: nginx
   rules:
-    - host: fake2.dolphin.top
+    - host: fake2.dev.dolphin.top
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: fake2-service
+                name: fake2
                 port:
                   number: 20002
