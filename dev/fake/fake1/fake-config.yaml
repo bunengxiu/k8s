@@ -56,6 +56,10 @@ metadata:
   namespace: fake1
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - fake1.dev.dolphin.top
+      secretName: tls-secret
   rules:
     - host: fake1.dev.dolphin.top
       http:
