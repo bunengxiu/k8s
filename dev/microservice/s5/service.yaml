@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: s5
+  namespace: microservice
+  labels:
+    app: s5
+spec:
+  selector:
+    app: s5
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 40005
+  type: ClusterIP

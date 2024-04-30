@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3
+  namespace: microservice
+  labels:
+    app: s3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s3
+  template:
+    metadata:
+      labels:
+        app: s3
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "s3"
+        dapr.io/app-port: "40003"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: s3
+        imagePullPolicy: Always
+        image: bunengxiu/dapr-microservice-s3:latest
+        ports:
+          - containerPort: 40003

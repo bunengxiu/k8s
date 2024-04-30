@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s5
+  namespace: microservice
+  labels:
+    app: s5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s5
+  template:
+    metadata:
+      labels:
+        app: s5
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "s5"
+        dapr.io/app-port: "40005"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: s5
+        imagePullPolicy: Always
+        image: bunengxiu/dapr-microservice-s5:latest
+        ports:
+          - containerPort: 40005

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s2
+  namespace: microservice
+  labels:
+    app: s2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s2
+  template:
+    metadata:
+      labels:
+        app: s2
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "s2"
+        dapr.io/app-port: "40002"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: s2
+        imagePullPolicy: Always
+        image: bunengxiu/dapr-microservice-s2:latest
+        ports:
+          - containerPort: 40002

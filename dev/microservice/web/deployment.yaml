@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: microservice
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "web"
+        dapr.io/app-port: "40000"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: web
+        imagePullPolicy: Always
+        image: bunengxiu/dapr-microservice-web:latest
+        ports:
+          - containerPort: 40000

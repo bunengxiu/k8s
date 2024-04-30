@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: s3
+  namespace: microservice
+  labels:
+    app: s3
+spec:
+  selector:
+    app: s3
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 40003
+  type: ClusterIP

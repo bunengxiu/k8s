@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+  namespace: microservice
+  labels:
+    app: web
+spec:
+  selector:
+    app: web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 40000
+  type: ClusterIP

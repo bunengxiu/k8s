@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s4
+  namespace: microservice
+  labels:
+    app: s4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s4
+  template:
+    metadata:
+      labels:
+        app: s4
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "s4"
+        dapr.io/app-port: "40004"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: s4
+        imagePullPolicy: Always
+        image: bunengxiu/dapr-microservice-s4:latest
+        ports:
+          - containerPort: 40004

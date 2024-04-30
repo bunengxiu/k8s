@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  namespace: microservice
+  labels:
+    app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "client"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: client
+        imagePullPolicy: Always
+        image: bunengxiu/dapr-microservice-client:latest

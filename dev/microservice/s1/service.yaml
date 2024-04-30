@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: s1
+  namespace: microservice
+  labels:
+    app: s1
+spec:
+  selector:
+    app: s1
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 40001
+  type: ClusterIP

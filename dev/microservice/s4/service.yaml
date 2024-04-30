@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: s4
+  namespace: microservice
+  labels:
+    app: s4
+spec:
+  selector:
+    app: s4
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 40004
+  type: ClusterIP
