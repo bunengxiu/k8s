@@ -17,6 +17,9 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "client"
         dapr.io/enable-api-logging: "true"
+        instrumentation.opentelemetry.io/inject-python: "opentelemetry-collector/python-instrumentation"
+        sidecar.opentelemetry.io/inject: "opentelemetry-collector/sidecar"
+        linkerd.io/inject: enabled
     spec:
       containers:
       - name: client

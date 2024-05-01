@@ -18,6 +18,9 @@ spec:
         dapr.io/app-id: "s4"
         dapr.io/app-port: "40004"
         dapr.io/enable-api-logging: "true"
+        instrumentation.opentelemetry.io/inject-python: "opentelemetry-collector/python-instrumentation"
+        sidecar.opentelemetry.io/inject: "opentelemetry-collector/sidecar"
+        linkerd.io/inject: enabled
     spec:
       containers:
       - name: s4
