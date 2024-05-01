@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: s3
-  namespace: microservice
   labels:
     app: s3
 spec:

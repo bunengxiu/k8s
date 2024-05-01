@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: s1
-  namespace: microservice
   labels:
     app: s1
 spec:

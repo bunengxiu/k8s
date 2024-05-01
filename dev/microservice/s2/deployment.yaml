@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: s2
-  namespace: microservice
   labels:
     app: s2
 spec:

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client
-  namespace: microservice
   labels:
     app: client
 spec:
