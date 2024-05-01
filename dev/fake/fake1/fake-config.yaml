@@ -22,7 +22,6 @@ spec:
       annotations:
         instrumentation.opentelemetry.io/inject-python: "opentelemetry-collector/python-instrumentation"
         sidecar.opentelemetry.io/inject: "opentelemetry-collector/sidecar"
-        linkerd.io/inject: enabled
     spec:
       containers:
         - name: fake1
