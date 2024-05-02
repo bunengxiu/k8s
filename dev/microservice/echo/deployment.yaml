@@ -16,7 +16,7 @@ spec:
         dapr.io/enabled: "true"
         dapr.io/app-id: "echo"
         dapr.io/app-port: "40006"
-        dapr.io/config: "pipeline"
+        dapr.io/config: "ratelimit"
         dapr.io/sidecar-listen-addresses: "0.0.0.0"
     spec:
       containers:
