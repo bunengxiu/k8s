@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+  labels:
+    app: echo
+spec:
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "echo"
+        dapr.io/app-port: "40006"
+        dapr.io/config: "pipeline"
+        dapr.io/sidecar-listen-addresses: "0.0.0.0"
+    spec:
+      containers:
+        - name: echo
+          image: bunengxiu/dapr-microservice-echo:latest
+          ports:
+            - containerPort: 40006
+          imagePullPolicy: Always

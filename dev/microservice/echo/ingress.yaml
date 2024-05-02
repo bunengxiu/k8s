@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echo
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: echo.dev.dolphin.top
+      http:
+        paths:
+          - backend:
+              service:
+                name: echo-dapr
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
